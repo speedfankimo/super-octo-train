@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Audi_dealer_outlet_visible_map</title>
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    <link rel="stylesheet" type="text/css" href="https://js.cit.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1526040296" />
+    <script src="http://js.cit.api.here.com/v3/3.0/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.cit.api.here.com/v3/3.0/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
+    <!-- for interactive map  -->
+    <script src="http://js.cit.api.here.com/v3/3.0/mapsjs-mapevents.js" type="text/javascript" charset="utf-8"></script>
+    <!-- for StreetLevel -->
+    <script src="http://js.cit.api.here.com/v3/3.0/mapsjs-pano.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="https://js.cit.api.here.com/v3/3.0/mapsjs-ui.js"></script>
+</head>
+
+<body>
+    <div id='maps' style="width: 100%;height:600px"></div>
+    <script type="text/javascript" charset="utf-8">
+    var platform = new H.service.Platform({
+        'app_id': 'OpnOeeAkAALSVSlPWcsf',
+        'app_code': '_Bi6G3bqymSbOGwt2YYM2g'
+
+    });
+
+
+
+    // Obtain the default map types from the platform object:
+    //{lg: 'CHT', lg2: 'tha'}
+    var defaultLayers = platform.createDefaultLayers({ lg: 'CHT', lg2: 'ENG' });
+    // Instantiate (and display) a map object:
+    var map = new H.Map(
+        document.getElementById('maps'),
+        /*(定義基本的呈現) default the lays*/
+        defaultLayers.normal.map, {
+            zoom: 8,
+            center: {
+                lat: 25.0339,
+                lng: 121.5647
+            }
+        });
+
+    //使地圖能pan / drag ; create the listener for map interactive
+    // Enable the event system on the map instance:
+    var mapEvents = new H.mapevents.MapEvents(map);
+    // Add event listener:
+    map.addEventListener('tap', function(evt) {
+        // Log 'tap' and 'mouse' events:
+        console.log(evt.type, evt.currentPointer.type);
+    });
+
+    // Instantiate the default behavior, providing the mapEvents object: 
+    var behavior = new H.mapevents.Behavior(mapEvents);
+
+    // Create the default UI: 
+    var ui = H.ui.UI.createDefault(map, defaultLayers, 'zh-CN');
+    /*
+    //remove the StreetLevel Control in default UI ; 移除UI的物件
+    ui.getControl('panorama').setEnabled(false)
+    */
+
+
+
+    /*.setBaseLayer() -> change the lays (設定layer的呈現)
+      - normal / satellite / terrain ; 
+      - map / traffic / panorama / transit / xbase / base / labels ; 
+      - incidents / venues
+    */
+    map.setBaseLayer(defaultLayers.normal.map);
+    //增加圖層的方式
+    map.addLayer(defaultLayers.venues);
+    //map.addLayer(defaultLayers.incidents);
+
+    //設定地圖中心點
+    map.setCenter({ lat: 23.795572337775873 , lng: 120.90575116078065 });
+
+
+
+
+
+    /*
+        //增加訊息框
+
+        // Create an info bubble object at a specific geographic location 創建訊息視窗:
+        var HereBubble = new H.ui.InfoBubble({ lng: 121.56848, lat: 25.03689 }, {
+            content: '<em>HERE Office<em>'
+        });
+        var taipei101Bubble = new H.ui.InfoBubble({ lat: 25.0339, lng: 121.5647 }, {
+            content: '<b>Taipei 101</b>'
+        });
+        // Add info bubble to the UI:
+        ui.addBubble(taipei101Bubble);
+        ui.addBubble(HereBubble);
+    */
+
+
+    /* 
+    //呼叫maptile API 展現alps 或 fleet的圖層
+    // Create a MapTileService instance to request base tiles (i.e. 
+    // base.map.api.here.com): alps or fleet
+    var mapTileService = platform.getMapTileService({ 'type': 'base' });
+
+    // Create a tile layer which requests map tiles with an additional 'style'
+    // URL parameter set to 'fleet':
+    var fleetStyleLayer = mapTileService.createTileLayer(
+        'maptile',
+        'normal.day',
+        256,
+        'png8', { 'style': 'fleet' });
+
+    // Set the new fleet style layer as a base layer on the map:
+    map.setBaseLayer(fleetStyleLayer); 
+    */
+
+
+			    //add svg Icon for Maker
+    var svgMarkup = '<svg width="55" height="35" ' +
+        'xmlns="http://www.w3.org/2000/svg">' +
+        '<rect stroke="white" fill="#1b468d" x="1" y="1" width="55" ' +
+        'height="18" /><text x="28" y="15" font-size="8pt" ' +
+        'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+        'fill="white">Audi 18Q3</text></svg>';
+
+
+
+
+
+    let points = [{ lat: 25.06647, lng: 121.58408 },
+{ lat: 25.054335, lng: 121.595188 },
+{ lat: 25.06647, lng: 121.58408 },
+{ lat: 25.041821, lng: 121.538234 },
+{ lat: 25.12697, lng: 121.49817 },
+{ lat: 25.003193, lng: 121.488099 },
+{ lat: 25.012919, lng: 121.467779 },
+{ lat: 24.96209, lng: 121.423352 },
+{ lat: 24.977785, lng: 121.236012 },
+{ lat: 24.811964, lng: 120.988518 },
+{ lat: 24.141046, lng: 120.641464 },
+{ lat: 23.979163, lng: 120.571026 },
+{ lat: 24.151891, lng: 120.625327 },
+{ lat: 22.972758, lng: 120.247606 },
+{ lat: 22.670962, lng: 120.30078 },
+{ lat: 22.670962, lng: 120.30078 },
+{ lat: 24.96209, lng: 121.423352 },
+{ lat: 24.151891, lng: 120.625327 },
+
+
+    ]
+    let b = 0
+    for (b; b < points.length; b++) {
+	
+	    var icons = new H.map.Icon(svgMarkup),
+       
+        Audi18Q3Marker = new H.map.Marker(
+            points[b], { icon: icons });
+    map.addObject(Audi18Q3Marker);
+}	
+	
+	
+	
+	
+	
+    var svgMarkup2 = '<svg width="55" height="17" ' +
+        'xmlns="http://www.w3.org/2000/svg">' +
+        '<rect stroke="white" fill="#468d46" x="1" y="1" width="55" ' +
+        'height="18" /><text x="28" y="15" font-size="8pt" ' +
+        'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+        'fill="white" opacity="0.9" stroke-opacity="0.9">Audi 19Q1</text></svg>';	
+	
+		    let points2 = [{ lat: 25.06647, lng: 121.58408 },
+{ lat: 25.054335, lng: 121.595188 },
+{ lat: 25.06647, lng: 121.58408 },
+{ lat: 25.041821, lng: 121.538234 },
+{ lat: 25.12697, lng: 121.49817 },
+{ lat: 25.003193, lng: 121.488099 },
+{ lat: 25.012919, lng: 121.467779 },
+{ lat: 24.96209, lng: 121.423352 },
+{ lat: 24.977785, lng: 121.236012 },
+{ lat: 24.811964, lng: 120.988518 },
+{ lat: 24.141046, lng: 120.641464 },
+{ lat: 23.979163, lng: 120.571026 },
+{ lat: 24.151891, lng: 120.625327 },
+{ lat: 22.972758, lng: 120.247606 },
+{ lat: 22.670962, lng: 120.30078 },
+{ lat: 22.670962, lng: 120.30078 },
+{ lat: 24.96209, lng: 121.423352 },
+{ lat: 24.151891, lng: 120.625327 },
+
+    ]
+	
+	
+	
+
+    let d = 0
+    for (d; d < points2.length; d++) {
+    var icons2 = new H.map.Icon(svgMarkup2),
+       
+       Audi19Q1Marker = new H.map.Marker(
+            points2[d], { icon: icons2 });
+    map.addObject(Audi19Q1Marker);
+	
+    }
+	
+	
+	
+	    //add svg Icon for Maker
+    var svgMarkup = '<svg width="30" height="18" ' +
+        'xmlns="http://www.w3.org/2000/svg">' +
+        '<rect stroke="white" fill="#1b468d" x="1" y="1" width="30" ' +
+        'height="18" /><text x="16" y="15" font-size="8pt" ' +
+        'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+        'fill="white">HERE</text></svg>';
+
+    var icons = new H.map.Icon(svgMarkup),
+        coords = { lat: 25.03689, lng: 121.56848 },
+        hereTaipeiMarker = new H.map.Marker(
+            coords, { icon: icons });
+    map.addObject(hereTaipeiMarker);
+	
+    </script>
+</body>
+
+</html>
