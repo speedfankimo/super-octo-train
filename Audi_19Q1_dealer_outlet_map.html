@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Audi_ALL_19Q1_dealer_outlet_visible_map</title>
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    <link rel="stylesheet" type="text/css" href="https://js.cit.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1526040296" />
+    <script src="http://js.cit.api.here.com/v3/3.0/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.cit.api.here.com/v3/3.0/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
+    <!-- for interactive map  -->
+    <script src="http://js.cit.api.here.com/v3/3.0/mapsjs-mapevents.js" type="text/javascript" charset="utf-8"></script>
+    <!-- for StreetLevel -->
+    <script src="http://js.cit.api.here.com/v3/3.0/mapsjs-pano.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="https://js.cit.api.here.com/v3/3.0/mapsjs-ui.js"></script>
+</head>
+
+<body>
+    <div id='maps' style="width: 100%;height:600px"></div>
+    <script type="text/javascript" charset="utf-8">
+    var platform = new H.service.Platform({
+        'app_id': 'OpnOeeAkAALSVSlPWcsf',
+        'app_code': '_Bi6G3bqymSbOGwt2YYM2g'
+
+    });
+
+
+
+    // Obtain the default map types from the platform object:
+    //{lg: 'CHT', lg2: 'tha'}
+    var defaultLayers = platform.createDefaultLayers({ lg: 'CHT', lg2: 'ENG' });
+    // Instantiate (and display) a map object:
+    var map = new H.Map(
+        document.getElementById('maps'),
+        /*(定義基本的呈現) default the lays*/
+        defaultLayers.normal.map, {
+            zoom: 8,
+            center: {
+                lat: 25.0339,
+                lng: 121.5647
+            }
+        });
+
+    //使地圖能pan / drag ; create the listener for map interactive
+    // Enable the event system on the map instance:
+    var mapEvents = new H.mapevents.MapEvents(map);
+    // Add event listener:
+    map.addEventListener('tap', function(evt) {
+        // Log 'tap' and 'mouse' events:
+        console.log(evt.type, evt.currentPointer.type);
+    });
+
+    // Instantiate the default behavior, providing the mapEvents object: 
+    var behavior = new H.mapevents.Behavior(mapEvents);
+
+    // Create the default UI: 
+    var ui = H.ui.UI.createDefault(map, defaultLayers, 'zh-CN');
+    /*
+    //remove the StreetLevel Control in default UI ; 移除UI的物件
+    ui.getControl('panorama').setEnabled(false)
+    */
+
+
+
+    /*.setBaseLayer() -> change the lays (設定layer的呈現)
+      - normal / satellite / terrain ; 
+      - map / traffic / panorama / transit / xbase / base / labels ; 
+      - incidents / venues
+    */
+    map.setBaseLayer(defaultLayers.normal.map);
+    //增加圖層的方式
+    map.addLayer(defaultLayers.venues);
+    //map.addLayer(defaultLayers.incidents);
+
+    //設定地圖中心點
+    map.setCenter({ lat: 23.795572337775873 , lng: 120.90575116078065 });
+
+
+
+
+
+    /*
+        //增加訊息框
+
+        // Create an info bubble object at a specific geographic location 創建訊息視窗:
+        var HereBubble = new H.ui.InfoBubble({ lng: 121.56848, lat: 25.03689 }, {
+            content: '<em>HERE Office<em>'
+        });
+        var taipei101Bubble = new H.ui.InfoBubble({ lat: 25.0339, lng: 121.5647 }, {
+            content: '<b>Taipei 101</b>'
+        });
+        // Add info bubble to the UI:
+        ui.addBubble(taipei101Bubble);
+        ui.addBubble(HereBubble);
+    */
+
+
+    /* 
+    //呼叫maptile API 展現alps 或 fleet的圖層
+    // Create a MapTileService instance to request base tiles (i.e. 
+    // base.map.api.here.com): alps or fleet
+    var mapTileService = platform.getMapTileService({ 'type': 'base' });
+
+    // Create a tile layer which requests map tiles with an additional 'style'
+    // URL parameter set to 'fleet':
+    var fleetStyleLayer = mapTileService.createTileLayer(
+        'maptile',
+        'normal.day',
+        256,
+        'png8', { 'style': 'fleet' });
+
+    // Set the new fleet style layer as a base layer on the map:
+    map.setBaseLayer(fleetStyleLayer); 
+    */
+	
+	
+	
+	    //add svg Icon for Maker
+    var svgMarkup = '<svg width="50" height="18" ' +
+        'xmlns="http://www.w3.org/2000/svg">' +
+        '<rect stroke="white" fill="#1b468d" x="1" y="1" width="50" ' +
+        'height="18" /><text x="23" y="15" font-size="8pt" ' +
+        'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+        'fill="white">奧迪中和</text></svg>';
+
+    var icons = new H.map.Icon(svgMarkup),
+        coords = { lat:25.00319, lng: 121.48806},
+        奧迪中和 = new H.map.Marker(
+            coords, { icon: icons });
+    map.addObject(奧迪中和);
+	
+	
+	
+	    var svgMarkup = '<svg width="50" height="18" ' +
+        'xmlns="http://www.w3.org/2000/svg">' +
+        '<rect stroke="white" fill="#1b468d" x="1" y="1" width="50" ' +
+        'height="18" /><text x="23" y="15" font-size="8pt" ' +
+        'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+        'fill="white">奧迪北投</text></svg>';
+
+    var icons = new H.map.Icon(svgMarkup),
+        coords = { lat:25.12697, lng: 121.49818},
+        奧迪北投 = new H.map.Marker(
+            coords, { icon: icons });
+    map.addObject(奧迪北投);
+	
+	
+		    var svgMarkup = '<svg width="50" height="18" ' +
+        'xmlns="http://www.w3.org/2000/svg">' +
+        '<rect stroke="white" fill="#1b468d" x="1" y="1" width="50" ' +
+        'height="18" /><text x="23" y="15" font-size="8pt" ' +
+        'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+        'fill="white">奧迪南屯</text></svg>';
+
+    var icons = new H.map.Icon(svgMarkup),
+        coords = { lat:24.15192, lng: 120.62533},
+        奧迪南屯 = new H.map.Marker(
+            coords, { icon: icons });
+    map.addObject(奧迪南屯);
+	
+	
+	
+			    var svgMarkup = '<svg width="50" height="18" ' +
+        'xmlns="http://www.w3.org/2000/svg">' +
+        '<rect stroke="white" fill="#1b468d" x="1" y="1" width="50" ' +
+        'height="18" /><text x="23" y="15" font-size="8pt" ' +
+        'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+        'fill="white">奧迪南港</text></svg>';
+
+    var icons = new H.map.Icon(svgMarkup),
+        coords = { lat:25.05435, lng: 121.59516},
+        奧迪南港 = new H.map.Marker(
+            coords, { icon: icons });
+    map.addObject(奧迪南港);
+	
+	
+	
+				    var svgMarkup = '<svg width="50" height="18" ' +
+        'xmlns="http://www.w3.org/2000/svg">' +
+        '<rect stroke="white" fill="#1b468d" x="1" y="1" width="50" ' +
+        'height="18" /><text x="23" y="15" font-size="8pt" ' +
+        'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+        'fill="white">奧迪台中</text></svg>';
+
+    var icons = new H.map.Icon(svgMarkup),
+        coords = { lat:24.14107, lng: 120.64148},
+        奧迪台中 = new H.map.Marker(
+            coords, { icon: icons });
+    map.addObject(奧迪台中);
+	
+	
+	
+		var svgMarkup = '<svg width="50" height="18" ' +
+        'xmlns="http://www.w3.org/2000/svg">' +
+        '<rect stroke="white" fill="#1b468d" x="1" y="1" width="50" ' +
+        'height="18" /><text x="23" y="15" font-size="8pt" ' +
+        'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+        'fill="white">奧迪台南</text></svg>';
+
+    var icons = new H.map.Icon(svgMarkup),
+        coords = { lat:22.97272, lng: 120.24759},
+        奧迪台南 = new H.map.Marker(
+            coords, { icon: icons });
+    map.addObject(奧迪台南);
+	
+	
+			var svgMarkup = '<svg width="50" height="18" ' +
+        'xmlns="http://www.w3.org/2000/svg">' +
+        '<rect stroke="white" fill="#1b468d" x="1" y="1" width="50" ' +
+        'height="18" /><text x="23" y="15" font-size="8pt" ' +
+        'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+        'fill="white">奧迪土城</text></svg>';
+
+    var icons = new H.map.Icon(svgMarkup),
+        coords = { lat:24.96206, lng: 121.42339},
+        奧迪土城 = new H.map.Marker(
+            coords, { icon: icons });
+    map.addObject(奧迪土城);
+	
+	
+				var svgMarkup = '<svg width="50" height="18" ' +
+        'xmlns="http://www.w3.org/2000/svg">' +
+        '<rect stroke="white" fill="#1b468d" x="1" y="1" width="50" ' +
+        'height="18" /><text x="23" y="15" font-size="8pt" ' +
+        'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+        'fill="white">奧迪彰化</text></svg>';
+
+    var icons = new H.map.Icon(svgMarkup),
+        coords = { lat:23.97917, lng: 120.57105},
+        奧迪彰化 = new H.map.Marker(
+            coords, { icon: icons });
+    map.addObject(奧迪彰化);
+	
+					var svgMarkup = '<svg width="50" height="18" ' +
+        'xmlns="http://www.w3.org/2000/svg">' +
+        '<rect stroke="white" fill="#1b468d" x="1" y="1" width="50" ' +
+        'height="18" /><text x="23" y="15" font-size="8pt" ' +
+        'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+        'fill="white">奧迪忠孝</text></svg>';
+
+    var icons = new H.map.Icon(svgMarkup),
+        coords = { lat:25.04179, lng: 121.53823},
+        奧迪忠孝 = new H.map.Marker(
+            coords, { icon: icons });
+    map.addObject(奧迪忠孝);
+	
+	
+var svgMarkup = '<svg width="50" height="18" ' +
+        'xmlns="http://www.w3.org/2000/svg">' +
+        '<rect stroke="white" fill="#1b468d" x="1" y="1" width="50" ' +
+        'height="18" /><text x="23" y="15" font-size="8pt" ' +
+        'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+        'fill="white">奧迪新竹</text></svg>';
+
+    var icons = new H.map.Icon(svgMarkup),
+        coords = { lat:24.81198, lng: 120.98849},
+        奧迪新竹 = new H.map.Marker(
+            coords, { icon: icons });
+    map.addObject(奧迪新竹);
+	
+	var svgMarkup = '<svg width="50" height="18" ' +
+        'xmlns="http://www.w3.org/2000/svg">' +
+        '<rect stroke="white" fill="#1b468d" x="1" y="1" width="50" ' +
+        'height="18" /><text x="23" y="15" font-size="8pt" ' +
+        'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+        'fill="white">奧迪板橋</text></svg>';
+
+    var icons = new H.map.Icon(svgMarkup),
+        coords = { lat:25.01294, lng: 121.46776},
+        奧迪板橋 = new H.map.Marker(
+            coords, { icon: icons });
+    map.addObject(奧迪板橋);
+	
+	
+		var svgMarkup = '<svg width="50" height="18" ' +
+        'xmlns="http://www.w3.org/2000/svg">' +
+        '<rect stroke="white" fill="#1b468d" x="1" y="1" width="50" ' +
+        'height="18" /><text x="23" y="15" font-size="8pt" ' +
+        'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+        'fill="white">奧迪桃園</text></svg>';
+
+    var icons = new H.map.Icon(svgMarkup),
+        coords = { lat:24.97775, lng: 121.23601},
+        奧迪桃園 = new H.map.Marker(
+            coords, { icon: icons });
+    map.addObject(奧迪桃園);
+	
+	
+			var svgMarkup = '<svg width="50" height="18" ' +
+        'xmlns="http://www.w3.org/2000/svg">' +
+        '<rect stroke="white" fill="#1b468d" x="1" y="1" width="50" ' +
+        'height="18" /><text x="23" y="15" font-size="8pt" ' +
+        'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+        'fill="white">奧迪高雄</text></svg>';
+
+    var icons = new H.map.Icon(svgMarkup),
+        coords = { lat:22.67098, lng: 120.30078},
+        奧迪高雄 = new H.map.Marker(
+            coords, { icon: icons });
+    map.addObject(奧迪高雄);
+	
+	
+	
+var svgMarkup = '<svg width="90" height="18" ' +
+        'xmlns="http://www.w3.org/2000/svg">' +
+        '<rect stroke="white" fill="#c41707" x="1" y="1" width="90" ' +
+        'height="18" /><text x="45" y="15" font-size="8pt" ' +
+        'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+        'fill="white">奧迪台北旗艦中心</text></svg>';
+
+    var icons = new H.map.Icon(svgMarkup),
+        coords = { lat:25.06647, lng: 121.58405},
+        奧迪台北旗艦中心 = new H.map.Marker(
+            coords, { icon: icons });
+    map.addObject(奧迪台北旗艦中心);
+	
+	
+	var svgMarkup = '<svg width="100" height="18" ' +
+        'xmlns="http://www.w3.org/2000/svg">' +
+        '<rect stroke="white" fill="#2aaadd" x="1" y="1" width="100" ' +
+        'height="18" /><text x="50" y="15" font-size="8pt" ' +
+        'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+        'fill="white">奧迪嚴選中古車南屯</text></svg>';
+
+    var icons = new H.map.Icon(svgMarkup),
+        coords = { lat:24.15192, lng: 120.62533},
+        奧迪嚴選中古車南屯 = new H.map.Marker(
+            coords, { icon: icons });
+    map.addObject(奧迪嚴選中古車南屯);
+	
+	
+	
+	var svgMarkup = '<svg width="100" height="35" ' +
+        'xmlns="http://www.w3.org/2000/svg">' +
+        '<rect stroke="white" fill="#2aaadd" x="1" y="1" width="100" ' +
+        'height="18" /><text x="50" y="15" font-size="8pt" ' +
+        'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+        'fill="white">奧迪嚴選中古車台北</text></svg>';
+
+    var icons = new H.map.Icon(svgMarkup),
+        coords = { lat:25.06647, lng: 121.58405},
+        奧迪嚴選中古車台北 = new H.map.Marker(
+            coords, { icon: icons });
+    map.addObject(奧迪嚴選中古車台北);
+	
+	
+	
+	var svgMarkup = '<svg width="100" height="18" ' +
+        'xmlns="http://www.w3.org/2000/svg">' +
+        '<rect stroke="white" fill="#2aaadd" x="1" y="1" width="100" ' +
+        'height="18" /><text x="50" y="15" font-size="8pt" ' +
+        'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+        'fill="white">奧迪嚴選中古車土城</text></svg>';
+
+    var icons = new H.map.Icon(svgMarkup),
+        coords = { lat:24.96206, lng: 121.42339},
+        奧迪嚴選中古車土城 = new H.map.Marker(
+            coords, { icon: icons });
+    map.addObject(奧迪嚴選中古車土城);
+	
+	
+	var svgMarkup = '<svg width="100" height="35" ' +
+        'xmlns="http://www.w3.org/2000/svg">' +
+        '<rect stroke="white" fill="#2aaadd" x="1" y="1" width="100" ' +
+        'height="18" /><text x="50" y="15" font-size="8pt" ' +
+        'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+        'fill="white">奧迪嚴選中古車高雄</text></svg>';
+
+    var icons = new H.map.Icon(svgMarkup),
+        coords = { lat:22.67098, lng: 120.30078},
+        奧迪嚴選中古車高雄 = new H.map.Marker(
+            coords, { icon: icons });
+    map.addObject(奧迪嚴選中古車高雄);
+	
+	
+	
+	
+	
+    </script>
+</body>
+
+</html>
